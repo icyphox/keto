@@ -53,22 +53,22 @@ func Test(t *testing.T) {
 			// We execute every test with all clients available
 			for _, cl := range []client{
 				&grpcClient{
-					readRemote:  reg.Config().ReadAPIListenOn(),
-					writeRemote: reg.Config().WriteAPIListenOn(),
+					readRemote:  reg.Config(ctx).ReadAPIListenOn(),
+					writeRemote: reg.Config(ctx).WriteAPIListenOn(),
 					ctx:         ctx,
 				},
 				&restClient{
-					readURL:  "http://" + reg.Config().ReadAPIListenOn(),
-					writeURL: "http://" + reg.Config().WriteAPIListenOn(),
+					readURL:  "http://" + reg.Config(ctx).ReadAPIListenOn(),
+					writeURL: "http://" + reg.Config(ctx).WriteAPIListenOn(),
 				},
 				&cliClient{c: &cmdx.CommandExecuter{
 					New:            cmd.NewRootCmd,
 					Ctx:            ctx,
-					PersistentArgs: []string{"--" + cliclient.FlagReadRemote, reg.Config().ReadAPIListenOn(), "--" + cliclient.FlagWriteRemote, reg.Config().WriteAPIListenOn(), "--" + cmdx.FlagFormat, string(cmdx.FormatJSON)},
+					PersistentArgs: []string{"--" + cliclient.FlagReadRemote, reg.Config(ctx).ReadAPIListenOn(), "--" + cliclient.FlagWriteRemote, reg.Config(ctx).WriteAPIListenOn(), "--" + cmdx.FlagFormat, string(cmdx.FormatJSON)},
 				}},
 				&sdkClient{
-					readRemote:  reg.Config().ReadAPIListenOn(),
-					writeRemote: reg.Config().WriteAPIListenOn(),
+					readRemote:  reg.Config(ctx).ReadAPIListenOn(),
+					writeRemote: reg.Config(ctx).WriteAPIListenOn(),
 				},
 			} {
 				t.Run(fmt.Sprintf("client=%T", cl), runCases(cl, addNamespace))
@@ -92,12 +92,12 @@ func TestServeConfig(t *testing.T) {
 	closeServer := startServer(ctx, t, reg)
 	defer closeServer()
 
-	for !healthReady(t, "http://"+reg.Config().ReadAPIListenOn()) {
+	for !healthReady(t, "http://"+reg.Config(ctx).ReadAPIListenOn()) {
 		t.Log("Waiting for health check to be ready")
 		time.Sleep(10 * time.Millisecond)
 	}
 
-	req, err := http.NewRequest(http.MethodOptions, "http://"+reg.Config().ReadAPIListenOn()+relationtuple.RouteBase, nil)
+	req, err := http.NewRequest(http.MethodOptions, "http://"+reg.Config(ctx).ReadAPIListenOn()+relationtuple.RouteBase, nil)
 	require.NoError(t, err)
 	req.Header.Set("Origin", "https://ory.sh")
 	resp, err := http.DefaultClient.Do(req)

@@ -25,14 +25,16 @@ import (
 )
 
 func (r *RegistryDefault) enableSqa(cmd *cobra.Command) {
+	ctx := cmd.Context()
+
 	r.sqaService = metricsx.New(
 		cmd,
 		r.Logger(),
-		r.Config().Source(),
+		r.Config(ctx).Source(),
 		&metricsx.Options{
 			Service:       "ory-keto",
-			ClusterID:     metricsx.Hash(r.Config().DSN()),
-			IsDevelopment: strings.HasPrefix(r.Config().DSN(), "sqlite"),
+			ClusterID:     metricsx.Hash(r.Config(ctx).DSN()),
+			IsDevelopment: strings.HasPrefix(r.Config(ctx).DSN(), "sqlite"),
 			WriteKey:      "qQlI6q8Q4WvkzTjKQSor4sHYOikHIvvi",
 			WhitelistedPaths: []string{
 				"/",
@@ -69,18 +71,18 @@ func (r *RegistryDefault) ServeAll(ctx context.Context) error {
 }
 
 func (r *RegistryDefault) ServeRead(ctx context.Context) func() error {
-	rt, s := r.ReadRouter(), r.ReadGRPCServer()
+	rt, s := r.ReadRouter(ctx), r.ReadGRPCServer(ctx)
 
 	return func() error {
-		return multiplexPort(ctx, r.Config().ReadAPIListenOn(), rt, s)
+		return multiplexPort(ctx, r.Config(ctx).ReadAPIListenOn(), rt, s)
 	}
 }
 
 func (r *RegistryDefault) ServeWrite(ctx context.Context) func() error {
-	rt, s := r.WriteRouter(), r.WriteGRPCServer()
+	rt, s := r.WriteRouter(ctx), r.WriteGRPCServer(ctx)
 
 	return func() error {
-		return multiplexPort(ctx, r.Config().WriteAPIListenOn(), rt, s)
+		return multiplexPort(ctx, r.Config(ctx).WriteAPIListenOn(), rt, s)
 	}
 }
 
