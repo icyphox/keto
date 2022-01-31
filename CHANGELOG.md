@@ -188,6 +188,8 @@
 
 ### Unclassified
 
+- run everything
+  ([3181250](https://github.com/icyphox/keto/commit/31812504fde4094789210db67e39ea4a6bddf03f))
 - aaa
   ([61d1d17](https://github.com/icyphox/keto/commit/61d1d1798a77babb700ef7c6be29dfce14365878))
 - run changelog only
