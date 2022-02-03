@@ -5,7 +5,8 @@
 
 **Table of Contents**
 
-- [0.0.0 (2022-01-31)](#000-2022-01-31)
+- [0.0.0 (2022-02-03)](#000-2022-02-03)
+- [0.8.1 (2022-02-02)](#081-2022-02-02)
   - [Bug Fixes](#bug-fixes)
   - [Documentation](#documentation)
   - [Features](#features)
@@ -110,7 +111,11 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# [0.0.0](https://github.com/icyphox/keto/compare/v0.7.0-alpha.1...v0.0.0) (2022-01-31)
+# [0.0.0](https://github.com/icyphox/keto/compare/v0.8.1...v0.0.0) (2022-02-03)
+
+# [0.8.1](https://github.com/icyphox/keto/compare/v0.7.0-alpha.1...v0.8.1) (2022-02-02)
+
+test
 
 ### Bug Fixes
 
@@ -188,6 +193,8 @@
 
 ### Unclassified
 
+- test
+  ([e457a90](https://github.com/icyphox/keto/commit/e457a909a8acec7e73fee017b378ef306b7f2d90))
 - run everything
   ([3181250](https://github.com/icyphox/keto/commit/31812504fde4094789210db67e39ea4a6bddf03f))
 - aaa
